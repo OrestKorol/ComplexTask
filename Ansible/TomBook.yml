@@ -1,0 +1,24 @@
+---
+- name: install tomcat server
+  hosts: tomcatNode
+  become: true
+
+  tasks:
+  - name: install java
+    yum:
+      name: java
+      state: latest
+
+  - name: download tomcat server packages
+    get_url:
+      url: https://apache.ip-connect.vn.ua/tomcat/tomcat-8/v8.5.68/bin/apache-tomcat-8.5.68.tar.gz
+      dest: /usr/local
+
+  - name: extract tomcat
+    unarchive:
+      src: /usr/local/apache-tomcat-8.5.68.tar.gz
+      dest: /usr/local
+      remote_src: yes
+
+  - name: start tomcat
+    shell: nohup /usr/local/pache-tomcat-8.5.68/bin/startup.sh &

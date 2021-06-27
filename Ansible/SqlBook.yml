@@ -1,0 +1,11 @@
+---
+ - hosts: sqlNode
+   user: ec2-user
+   
+   tasks:
+     - name: MySql instalation
+       action: yum name = {{ item }}
+       with_items:
+         - MySQL-python
+         - mysql
+         - mysql-server
