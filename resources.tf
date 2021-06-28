@@ -24,8 +24,8 @@ resource "aws_internet_gateway" "complex_gateway" {
 	}
 }
 
-resource "aws_default_route_table" "complex_route_table" {
-	default_route_table_id = aws_vpc.complex_vpc.default_route_table_id
+resource "aws_route_table" "complex_route_table" {
+	vpc_id = aws_vpc.complex_vpc.id
 	
 	route {
 		cidr_block = "0.0.0.0/0"
@@ -35,6 +35,11 @@ resource "aws_default_route_table" "complex_route_table" {
 	tags = {
 		Name = "default route table"
 	}
+}
+
+resource "aws_route_table_association" "complex_association" {
+	subnet_id = aws_subnet.complex_subnet.id
+	route_table_id = aws_route_table.complex_route_table.id
 }
 
 resource "aws_key_pair" "ssh-key" {
