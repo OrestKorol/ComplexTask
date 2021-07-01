@@ -60,16 +60,11 @@ resource "aws_security_group" "complex_security" {
 	}
 }
 
-resource "aws_key_pair" "ssh-key" {
-	key_name = "complex-key"
-	public_key = ""
-}
-
 resource "aws_instance" "sql_instance"{
-	ami = "ami-0721c9af7b9b75114"
+	ami = "ami-0277b52859bac6f4b"
 	instance_type = "t2.micro"
-	key_name = "complex-key"
-	associate_public_ip_adress = true
+	key_name = "Pipeline"
+	associate_public_ip_address = true
 	subnet_id = aws_subnet.complex_subnet.id
 	vpc_security_group_ids = [aws_security_group.complex_security.id]
 	
@@ -79,10 +74,10 @@ resource "aws_instance" "sql_instance"{
 }
 
 resource "aws_instance" "tomcat_instance"{
-	ami = "ami-0721c9af7b9b75114"
+	ami = "ami-0277b52859bac6f4b"
 	instance_type = "t2.micro"
-	key_name = "complex-key"
-	associate_public_ip_adress = true
+	key_name = "Pipeline"
+	associate_public_ip_address = true
 	subnet_id = aws_subnet.complex_subnet.id
 	vpc_security_group_ids = [aws_security_group.complex_security.id]
 	
