@@ -21,4 +21,5 @@
       remote_src: yes
 
   - name: start tomcat
+    shell: sudo su
     shell: nohup /usr/local/pache-tomcat-8.5.68/bin/startup.sh &
