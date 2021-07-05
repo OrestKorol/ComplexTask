@@ -22,4 +22,4 @@
 
   - name: start tomcat
     shell: sudo su
-    shell: nohup /usr/local/pache-tomcat-8.5.68/bin/startup.sh &
+    shell: nohup /usr/local/apache-tomcat-8.5.68/bin/startup.sh &
