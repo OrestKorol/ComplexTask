@@ -19,7 +19,19 @@
       src: /usr/local/apache-tomcat-8.5.68.tar.gz
       dest: /usr/local
       remote_src: yes
+      
+  - name: Add users file
+    become: true
+    copy:
+      src: tomcat-users.xml
+      dest: /usr/local/apache-tomcat-8.5.68/conf
+      
+  - name: Add .war package
+    become: true
+    copy:
+      src: War/SampleWebApp.war
+      dest: /usr/local/apache-tomcat-8.5.68/webapps
 
   - name: start tomcat
-    shell: sudo su
+    become: true
     shell: nohup /usr/local/apache-tomcat-8.5.68/bin/startup.sh &
