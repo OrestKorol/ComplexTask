@@ -1,0 +1,44 @@
+pipeline{
+    agent any
+    tools {
+        terraform 'terraform'
+    }
+    stages{
+        stage('Copy Git'){
+            steps{
+                git 'https://github.com/OrestKorol/ComplexTask'
+            }
+        }
+        stage('Terraform init&apply'){
+            steps{
+                sh 'terraform init'
+                sh 'terraform apply --auto-approve'
+            }
+        }
+        stage('Get&Set ip'){
+            steps{
+                sh 'bash configure_hosts.sh'
+            }
+        }
+        stage('Ansible'){
+            steps{
+                sleep 10
+                //mysql playbook
+                ansiblePlaybook colorized: true, credentialsId: 'e31e991e-6529-4085-9a3d-d84880b93a26', disableHostKeyChecking: true, installation: 'ansible', inventory: 'Ansible/hosts', playbook: 'Ansible/SqlBook.yml'
+                //tomcat playbook
+                ansiblePlaybook colorized: true, credentialsId: 'e31e991e-6529-4085-9a3d-d84880b93a26', disableHostKeyChecking: true, installation: 'ansible', inventory: 'Ansible/hosts', playbook: 'Ansible/TomBook.yml'
+            }
+        }
+        stage('Check tomcat'){
+            steps{
+                sleep 5
+                sh 'bash test_server.sh'
+            }
+        }
+        stage('Notify'){
+            steps{
+                mail bcc: '', body: 'Success!', cc: '', from: '', replyTo: '', subject: 'Pipeline Build', to: 'orest.i.korol@gmail.com'
+            }
+        }
+    }
+}
