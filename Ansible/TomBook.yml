@@ -11,12 +11,12 @@
 
   - name: download tomcat server packages
     get_url:
-      url: https://apache.ip-connect.vn.ua/tomcat/tomcat-8/v8.5.68/bin/apache-tomcat-8.5.68.tar.gz
+      url: https://apache.ip-connect.vn.ua/tomcat/tomcat-8/v8.5.69/bin/apache-tomcat-8.5.69.tar.gz
       dest: /usr/local
 
   - name: extract tomcat
     unarchive:
-      src: /usr/local/apache-tomcat-8.5.68.tar.gz
+      src: /usr/local/apache-tomcat-8.5.69.tar.gz
       dest: /usr/local
       remote_src: yes
       
@@ -24,14 +24,14 @@
     become: true
     copy:
       src: tomcat-users.xml
-      dest: /usr/local/apache-tomcat-8.5.68/conf
+      dest: /usr/local/apache-tomcat-8.5.69/conf
       
   - name: Add .war package
     become: true
     copy:
       src: War/SampleWebApp.war
-      dest: /usr/local/apache-tomcat-8.5.68/webapps
+      dest: /usr/local/apache-tomcat-8.5.69/webapps
 
   - name: start tomcat
     become: true
-    shell: nohup /usr/local/apache-tomcat-8.5.68/bin/startup.sh &
+    shell: nohup /usr/local/apache-tomcat-8.5.69/bin/startup.sh &
